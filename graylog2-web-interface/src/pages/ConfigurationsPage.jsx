@@ -10,6 +10,8 @@ import PermissionsMixin from 'util/PermissionsMixin';
 import SearchesConfig from 'components/configurations/SearchesConfig';
 import MessageProcessorsConfig from 'components/configurations/MessageProcessorsConfig';
 import SidecarConfig from 'components/configurations/SidecarConfig';
+import CustomizationConfig from 'components/configurations/CustomizationConfig';
+
 import EventsConfig from 'components/configurations/EventsConfig';
 import UrlWhiteListConfig from 'components/configurations/UrlWhiteListConfig';
 import DecoratorsConfig from '../components/configurations/DecoratorsConfig';
@@ -26,7 +28,7 @@ const MESSAGE_PROCESSORS_CONFIG = 'org.graylog2.messageprocessors.MessageProcess
 const SIDECAR_CONFIG = 'org.graylog.plugins.sidecar.system.SidecarConfiguration';
 const EVENTS_CONFIG = 'org.graylog.events.configuration.EventsConfiguration';
 const URL_WHITELIST_CONFIG = 'org.graylog2.system.urlwhitelist.UrlWhitelist';
-
+const CUSTOMIZATION_CONFIG = 'org.graylog2.configuration.Customization';
 class ConfigurationsPage extends React.Component {
   componentDidMount() {
     style.use();
@@ -35,6 +37,7 @@ class ConfigurationsPage extends React.Component {
     ConfigurationsActions.listMessageProcessorsConfig(MESSAGE_PROCESSORS_CONFIG);
     ConfigurationsActions.list(SIDECAR_CONFIG);
     ConfigurationsActions.list(EVENTS_CONFIG);
+    ConfigurationActions.list(this.CUSTOMIZATION_CONFIG);
     if (PermissionsMixin.isPermitted(permissions, ['urlwhitelist:read'])) {
       ConfigurationsActions.listWhiteListConfig(URL_WHITELIST_CONFIG);
     }
@@ -109,9 +112,11 @@ class ConfigurationsPage extends React.Component {
     const sidecarConfig = this._getConfig(SIDECAR_CONFIG);
     const eventsConfig = this._getConfig(EVENTS_CONFIG);
     const urlWhiteListConfig = this._getConfig(URL_WHITELIST_CONFIG);
+    const customizationConfig = this._getConfig(this.CUSTOMIZATION_CONFIG);
     let searchesConfigComponent;
     let messageProcessorsConfigComponent;
     let sidecarConfigComponent;
+    let customizationComponent;
     let eventsConfigComponent;
     let urlWhiteListConfigComponent;
     if (searchesConfig) {
@@ -138,6 +143,16 @@ class ConfigurationsPage extends React.Component {
     } else {
       sidecarConfigComponent = (<Spinner />);
     }
+
+    if (customizationConfig) {
+      customizationComponent = (
+        <CustomizationConfig config={customizationConfig}
+                             updateConfig={this._onUpdate(this.CUSTOMIZATION_CONFIG)} />
+      );
+    } else {
+      customizationComponent = (<Spinner />);
+    }
+
     if (eventsConfig) {
       eventsConfigComponent = (
         <EventsConfig config={eventsConfig}
@@ -174,6 +189,9 @@ class ConfigurationsPage extends React.Component {
             </Col>
             <Col md={6}>
               {sidecarConfigComponent}
+            </Col>
+            <Col md={6}>
+              {customizationComponent}
             </Col>
             <Col md={6}>
               {eventsConfigComponent}
