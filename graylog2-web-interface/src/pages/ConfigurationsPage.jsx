@@ -5,7 +5,6 @@ import { DocumentTitle, PageHeader, Spinner } from 'components/common';
 import { PluginStore } from 'graylog-web-plugin/plugin';
 import connect from 'stores/connect';
 import CombinedProvider from 'injection/CombinedProvider';
-
 import PermissionsMixin from 'util/PermissionsMixin';
 import SearchesConfig from 'components/configurations/SearchesConfig';
 import MessageProcessorsConfig from 'components/configurations/MessageProcessorsConfig';
@@ -37,7 +36,7 @@ class ConfigurationsPage extends React.Component {
     ConfigurationsActions.listMessageProcessorsConfig(MESSAGE_PROCESSORS_CONFIG);
     ConfigurationsActions.list(SIDECAR_CONFIG);
     ConfigurationsActions.list(EVENTS_CONFIG);
-    ConfigurationActions.list(this.CUSTOMIZATION_CONFIG);
+    ConfigurationsActions.list(CUSTOMIZATION_CONFIG);
     if (PermissionsMixin.isPermitted(permissions, ['urlwhitelist:read'])) {
       ConfigurationsActions.listWhiteListConfig(URL_WHITELIST_CONFIG);
     }
@@ -72,10 +71,10 @@ class ConfigurationsPage extends React.Component {
   };
 
   _pluginConfigs = () => {
-    return PluginStore.exports('systemConfigurations').map((systemConfig, idx) => {
+    return PluginStore.exports('systemConfigurations').map((systemConfig) => {
       return React.createElement(systemConfig.component, {
         // eslint-disable-next-line react/no-array-index-key
-        key: `system-configuration-${idx}`,
+        key: `system-configuration-${systemConfig.configType}`,
         config: this._getConfig(systemConfig.configType) || undefined,
         updateConfig: this._onUpdate(systemConfig.configType),
       });
