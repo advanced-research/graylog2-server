@@ -2,7 +2,7 @@
 
 exports[`BookmarkControls render the BookmarkControls should render dirty 1`] = `
 <button
-  className="Button-c9cbmb-0 iKWoaE btn btn-default"
+  className="Button__StyledButton-c9cbmb-0 kojzoH btn btn-default"
   disabled={false}
   onClick={[Function]}
   title="Unsaved changes"
@@ -35,7 +35,7 @@ exports[`BookmarkControls render the BookmarkControls should render dirty 1`] = 
 
 exports[`BookmarkControls render the BookmarkControls should render not dirty 1`] = `
 <button
-  className="Button-c9cbmb-0 iKWoaE btn btn-default"
+  className="Button__StyledButton-c9cbmb-0 kojzoH btn btn-default"
   disabled={false}
   onClick={[Function]}
   title="Saved search"
@@ -68,7 +68,7 @@ exports[`BookmarkControls render the BookmarkControls should render not dirty 1`
 
 exports[`BookmarkControls render the BookmarkControls should render not dirty with unsaved view 1`] = `
 <button
-  className="Button-c9cbmb-0 iKWoaE btn btn-default"
+  className="Button__StyledButton-c9cbmb-0 kojzoH btn btn-default"
   disabled={false}
   onClick={[Function]}
   title="Save search"
