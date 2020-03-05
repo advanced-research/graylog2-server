@@ -111,7 +111,8 @@ class ConfigurationsPage extends React.Component {
     const sidecarConfig = this._getConfig(SIDECAR_CONFIG);
     const eventsConfig = this._getConfig(EVENTS_CONFIG);
     const urlWhiteListConfig = this._getConfig(URL_WHITELIST_CONFIG);
-    const customizationConfig = this._getConfig(CUSTOMIZATION_CONFIG);
+    const customizationConfig = this._getConfig(CUSTOMIZATION_CONFIG)
+      || { badge_text: '', badge_color: '', badge_enable: false };
     let searchesConfigComponent;
     let messageProcessorsConfigComponent;
     let sidecarConfigComponent;
