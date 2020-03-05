@@ -111,7 +111,7 @@ class ConfigurationsPage extends React.Component {
     const sidecarConfig = this._getConfig(SIDECAR_CONFIG);
     const eventsConfig = this._getConfig(EVENTS_CONFIG);
     const urlWhiteListConfig = this._getConfig(URL_WHITELIST_CONFIG);
-    const customizationConfig = this._getConfig(this.CUSTOMIZATION_CONFIG);
+    const customizationConfig = this._getConfig(CUSTOMIZATION_CONFIG);
     let searchesConfigComponent;
     let messageProcessorsConfigComponent;
     let sidecarConfigComponent;
@@ -146,7 +146,7 @@ class ConfigurationsPage extends React.Component {
     if (customizationConfig) {
       customizationComponent = (
         <CustomizationConfig config={customizationConfig}
-                             updateConfig={this._onUpdate(this.CUSTOMIZATION_CONFIG)} />
+                             updateConfig={this._onUpdate(CUSTOMIZATION_CONFIG)} />
       );
     } else {
       customizationComponent = (<Spinner />);
