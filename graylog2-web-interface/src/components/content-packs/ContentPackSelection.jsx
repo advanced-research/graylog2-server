@@ -12,6 +12,11 @@ import Entity from 'logic/content-packs/Entity';
 import style from './ContentPackSelection.css';
 
 class ContentPackSelection extends React.Component {
+  static _toDisplayTitle(title) {
+    const newTitle = title.split('_').join(' ');
+    return newTitle[0].toUpperCase() + newTitle.substr(1);
+  }
+
   static propTypes = {
     contentPack: PropTypes.object.isRequired,
     onStateChange: PropTypes.func,
@@ -27,18 +32,13 @@ class ContentPackSelection extends React.Component {
     selectedEntities: {},
   };
 
-  static _toDisplayTitle(title) {
-    const newTitle = title.split('_').join(' ');
-    return newTitle[0].toUpperCase() + newTitle.substr(1);
-  }
-
   constructor(props) {
     super(props);
 
     this._bindValue = this._bindValue.bind(this);
     this.state = {
-      contentPack: this.props.contentPack,
-      filteredEntities: this.props.entities,
+      contentPack: props.contentPack,
+      filteredEntities: props.entities,
       filter: '',
       isFiltered: false,
       errors: {},
@@ -46,22 +46,23 @@ class ContentPackSelection extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ filteredEntities: nextProps.entities, contentPack: nextProps.contentPack });
-    if (this.state.isFiltered) {
-      this._filterEntities(this.state.filter);
-    }
-  }
+    const { isFiltered, filter } = this.state;
 
-  _updateField(name, value) {
-    const updatedPack = this.state.contentPack.toBuilder()[name](value).build();
-    this.props.onStateChange({ contentPack: updatedPack });
-    this.setState({ contentPack: updatedPack }, this._validate);
+    this.setState({
+      filteredEntities: nextProps.entities,
+      contentPack: nextProps.contentPack,
+    });
+
+    if (isFiltered) {
+      this._filterEntities(filter);
+    }
   }
 
   _validate = (newSelection) => {
     const mandatoryFields = ['name', 'summary', 'vendor'];
     const { contentPack } = this.state;
-    const selectedEntities = newSelection || this.props.selectedEntities;
+    const { selectedEntities: propsSelectedEntities } = this.props;
+    const selectedEntities = newSelection || propsSelectedEntities;
 
     const errors = mandatoryFields.reduce((acc, field) => {
       const newErrors = acc;
@@ -81,13 +82,10 @@ class ContentPackSelection extends React.Component {
     this.setState({ errors });
   };
 
-  _bindValue(event) {
-    this._updateField(event.target.name, FormsUtils.getValueFromInput(event.target));
-  }
-
   _updateSelectionEntity = (entity) => {
+    const { onStateChange, selectedEntities } = this.props;
     const typeName = entity.type.name;
-    const newSelection = cloneDeep(this.props.selectedEntities);
+    const newSelection = cloneDeep(selectedEntities);
     newSelection[typeName] = (newSelection[typeName] || []);
     const index = newSelection[typeName].findIndex((e) => { return e.id === entity.id; });
     if (index < 0) {
@@ -96,45 +94,21 @@ class ContentPackSelection extends React.Component {
       newSelection[typeName].splice(index, 1);
     }
     this._validate(newSelection);
-    this.props.onStateChange({ selectedEntities: newSelection });
+    onStateChange({ selectedEntities: newSelection });
   };
 
   _updateSelectionGroup = (type) => {
-    const newSelection = cloneDeep(this.props.selectedEntities);
+    const { entities, onStateChange, selectedEntities } = this.props;
+    const newSelection = cloneDeep(selectedEntities);
     if (this._isGroupSelected(type)) {
       newSelection[type] = [];
     } else {
-      newSelection[type] = this.props.entities[type];
+      newSelection[type] = entities[type];
     }
 
     this._validate(newSelection);
-    this.props.onStateChange({ selectedEntities: newSelection });
+    onStateChange({ selectedEntities: newSelection });
   };
-
-  _isUndetermined(type) {
-    if (!this.props.selectedEntities[type]) {
-      return false;
-    }
-
-    return !(this.props.selectedEntities[type].length === this.props.entities[type].length
-       || this.props.selectedEntities[type].length === 0);
-  }
-
-  _isSelected(entity) {
-    const typeName = entity.type.name;
-    if (!this.props.selectedEntities[typeName]) {
-      return false;
-    }
-
-    return this.props.selectedEntities[typeName].findIndex((e) => { return e.id === entity.id; }) >= 0;
-  }
-
-  _isGroupSelected(type) {
-    if (!this.props.selectedEntities[type]) {
-      return false;
-    }
-    return this.props.selectedEntities[type].length === this.props.entities[type].length;
-  }
 
   _onSetFilter = (filter) => {
     this._filterEntities(filter);
@@ -145,14 +119,16 @@ class ContentPackSelection extends React.Component {
   };
 
   _filterEntities = (filterArg) => {
+    const { entities } = this.props;
     const filter = filterArg;
+
     if (filter.length <= 0) {
-      this.setState({ filteredEntities: cloneDeep(this.props.entities), isFiltered: false, filter: filter });
+      this.setState({ filteredEntities: cloneDeep(entities), isFiltered: false, filter: filter });
       return;
     }
-    const filtered = Object.keys(this.props.entities).reduce((result, type) => {
+    const filtered = Object.keys(entities).reduce((result, type) => {
       const filteredEntities = cloneDeep(result);
-      filteredEntities[type] = this.props.entities[type].filter((entity) => {
+      filteredEntities[type] = entities[type].filter((entity) => {
         const regexp = RegExp(filter, 'i');
         return regexp.test(entity.title);
       });
@@ -168,11 +144,46 @@ class ContentPackSelection extends React.Component {
     return <span><Icon name="server" />{' '}<span>{entity.title}</span></span>;
   };
 
+  _isSelected(entity) {
+    const { selectedEntities } = this.props;
+    const typeName = entity.type.name;
+
+    if (!selectedEntities[typeName]) {
+      return false;
+    }
+
+    return selectedEntities[typeName].findIndex((e) => { return e.id === entity.id; }) >= 0;
+  }
+
+  _isGroupSelected(type) {
+    const { entities, selectedEntities } = this.props;
+
+    if (!selectedEntities[type]) {
+      return false;
+    }
+    return selectedEntities[type].length === entities[type].length;
+  }
+
+  _bindValue(event) {
+    this._updateField(event.target.name, FormsUtils.getValueFromInput(event.target));
+  }
+
+  _updateField(name, value) {
+    const { contentPack } = this.state;
+    const { onStateChange } = this.props;
+
+    const updatedPack = contentPack.toBuilder()[name](value).build();
+    onStateChange({ contentPack: updatedPack });
+    this.setState({ contentPack: updatedPack }, this._validate);
+  }
+
   render() {
-    const entitiesComponent = Object.keys(this.state.filteredEntities || {})
+    const { contentPack, errors, filteredEntities, isFiltered } = this.state;
+    const { edit } = this.props;
+    const entitiesComponent = Object.keys(filteredEntities || {})
       .sort((a, b) => naturalSort(a, b))
       .map((entityType) => {
-        const group = this.state.filteredEntities[entityType];
+        const group = filteredEntities[entityType];
         const entities = group.sort((a, b) => naturalSort(a.title, b.title)).map((entity) => {
           const checked = this._isSelected(entity);
           const header = this._entityItemHeader(entity);
@@ -193,8 +204,8 @@ class ContentPackSelection extends React.Component {
                               onChange={() => this._updateSelectionGroup(entityType)}
                               indetermined={this._isUndetermined(entityType)}
                               checked={this._isGroupSelected(entityType)}
-                              stayExpanded={this.state.isFiltered}
-                              expanded={this.state.isFiltered}
+                              stayExpanded={isFiltered}
+                              expanded={isFiltered}
                               padded={false}
                               header={ContentPackSelection._toDisplayTitle(entityType)}>
             <ExpandableList>
@@ -203,8 +214,6 @@ class ContentPackSelection extends React.Component {
           </ExpandableListItem>
         );
       });
-
-    const { errors } = this.state;
 
     return (
       <div>
@@ -219,7 +228,7 @@ class ContentPackSelection extends React.Component {
                        type="text"
                        bsStyle={errors.name ? 'error' : null}
                        maxLength={250}
-                       value={this.state.contentPack.name}
+                       value={contentPack.name}
                        onChange={this._bindValue}
                        label="Name"
                        help={errors.name ? errors.name : 'Required. Give a descriptive name for this content pack.'}
@@ -229,7 +238,7 @@ class ContentPackSelection extends React.Component {
                        type="text"
                        bsStyle={errors.summary ? 'error' : null}
                        maxLength={250}
-                       value={this.state.contentPack.summary}
+                       value={contentPack.summary}
                        onChange={this._bindValue}
                        label="Summary"
                        help={errors.summary ? errors.summary : 'Required. Give a short summary of the content pack.'}
@@ -237,7 +246,7 @@ class ContentPackSelection extends React.Component {
                 <Input name="description"
                        id="description"
                        type="textarea"
-                       value={this.state.contentPack.description}
+                       value={contentPack.description}
                        onChange={this._bindValue}
                        rows={6}
                        label="Description"
@@ -247,7 +256,7 @@ class ContentPackSelection extends React.Component {
                        type="text"
                        bsStyle={errors.vendor ? 'error' : null}
                        maxLength={250}
-                       value={this.state.contentPack.vendor}
+                       value={contentPack.vendor}
                        onChange={this._bindValue}
                        label="Vendor"
                        help={errors.vendor ? errors.vendor : 'Required. Who did this content pack and how can they be reached, e.g. Name and email.'}
@@ -256,7 +265,7 @@ class ContentPackSelection extends React.Component {
                        id="url"
                        type="text"
                        maxLength={250}
-                       value={this.state.contentPack.url}
+                       value={contentPack.url}
                        onChange={this._bindValue}
                        label="URL"
                        help="Where can I find the content pack. e.g. github url" />
@@ -267,7 +276,7 @@ class ContentPackSelection extends React.Component {
         <Row>
           <Col smOffset={1} lg={8}>
             <h2>Content Pack selection</h2>
-            {this.props.edit && (
+            {edit && (
             <HelpBlock>You can select between installed entities from the server (<Icon name="server" />) or
               entities from the former content pack revision (<Icon name="archive" className={style.contentPackEntity} />).
             </HelpBlock>
