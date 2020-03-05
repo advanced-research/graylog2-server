@@ -59,7 +59,6 @@ export default URLUtils;
 
 export const {
   parser,
-  appPrefixed,
   getParsedHash,
   getParsedSearch,
   qualifyUrl,
