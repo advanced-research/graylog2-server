@@ -579,42 +579,6 @@ const GlobalThemeStyles = createGlobalStyle`
     margin-top: 5px;
   }
 
-  .shard-routing .shards .shard {
-    padding: 10px;
-    margin: 5px;
-    width: 50px;
-    float: left;
-    text-align: center;
-  }
-
-  .shard-routing .shards .shard-started {
-    background-color: #dff0d8;
-  }
-
-  .shard-routing .shards .shard-relocating {
-    background-color: #de9df4;
-  }
-
-  .shard-routing .shards .shard-initializing {
-    background-color: #f4ddbc;
-  }
-
-  .shard-routing .shards .shard-unassigned {
-    background-color: #c3c3c3;
-  }
-
-  .shard-routing .shards .shard-primary .id {
-    font-weight: bold;
-    margin-bottom: 3px;
-    border-bottom: 1px solid #000;
-  }
-
-  .shard-routing .description {
-    font-size: 11px;
-    margin-top: 2px;
-    margin-left: 6px;
-  }
-
   .system-system dt {
     float: left;
   }
@@ -711,43 +675,6 @@ const GlobalThemeStyles = createGlobalStyle`
     margin-bottom: 0;
   }
 
-  .alert-type-form .help-text {
-    color: #939393;
-    font-size: 12px;
-    margin-left: 10px;
-  }
-
-  .alert-type-form input[type=number],
-  .alert-type-form input[type=text],
-  .alert-type-form select {
-    padding: 0 0 0 5px;
-    height: 25px;
-    vertical-align: baseline;
-    width: 50px;
-  }
-
-  .alert-type-form input[type=text] {
-    width: 200px;
-  }
-
-  .alert-type-form input.alert-type-title {
-    width: 300px;
-  }
-
-  .add-alert-destination-type {
-    margin-bottom: 0;
-  }
-
-  .alert-destination-form {
-    display: none;
-    font-size: 14px;
-    margin-top: 15px;
-  }
-
-  .alert-receivers {
-    padding-left: 10px;
-  }
-
   .alerts {
     margin-top: 15px;
   }
@@ -770,66 +697,13 @@ const GlobalThemeStyles = createGlobalStyle`
     color: #fff;
   }
 
-  .alert-condition .in-grace {
-    color: #8c8e86;
-  }
-
-  .query-exception {
-    margin-bottom: 0;
-  }
-
-  input.required-input-highlight {
-    border-color: rgb(233, 50, 45);
-    color: rgb(233, 50, 45);
-  }
-
-  .widget .replay-link {
-    color: #000;
-  }
-
-  .widget .replay-link:hover {
-    text-decoration: none;
-  }
-
-  .zeroclipboard-is-hover {
-    /* // via .btn-default:hover from bootstrap */
-    color: #333;
-    background-color: #d7d9d9;
-    border-color: #c3c8c8; /* // bootstrap copy end */
-    cursor: move;
-  }
-
-  .zeroclipboard-is-active {
-    color: #1a5273;
-  }
-
   .result-highlight-colored {
     background-color: #ffec3d;
-  }
-
-  .result-highlight-control label {
-    display: inline-block;
-    font-size: 1em;
-    line-height: 20px;
-  }
-
-  .node-state {
-    cursor: help;
   }
 
   .annotation .content {
     margin-bottom: 10px;
     cursor: auto !important;
-  }
-
-  textarea.textarea-xlarge {
-    width: 95%;
-    height: 300px;
-  }
-
-  .extractor-json {
-    font-family: monospace;
-    font-size: 13px;
   }
 
   .scrollable-table {
@@ -913,85 +787,6 @@ const GlobalThemeStyles = createGlobalStyle`
     margin: 0;
   }
 
-  .card .configuration-bundles .bundle-preview {
-    border: 1px solid #ececec;
-    border-radius: 2px;
-    background-color: #fff;
-    padding: 20px;
-  }
-
-  .card .configuration-bundles .bundle-preview pre {
-    background-color: #f5f5f5;
-  }
-
-  .configuration-bundles .accordion {
-    background-color: #fff;
-    border: 1px solid #ececec;
-    border-radius: 2px;
-  }
-
-  .configuration-bundles .accordion-group {
-    margin: 0;
-    border: 0;
-    border-bottom: 1px solid #ececec;
-    border-radius: 0;
-  }
-
-  .configuration-bundles .accordion-inner {
-    padding-left: 30px;
-  }
-
-  .configuration-bundles .accordion-inner .upload input[type="file"] {
-    height: 32px;
-  }
-
-  .configuration-bundles .bundle-preview {
-    background-color: #f5f5f5;
-    border: 1px solid #e3e3e3;
-    border-radius: 3px;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
-    padding: 10px;
-  }
-
-  .configuration-bundles .bundle-preview .preview-actions form {
-    display: inline-block;
-    margin-left: 20px;
-    margin-bottom: 0;
-  }
-
-  .configuration-bundles .bundle-preview .preview-actions form:first-child {
-    margin-left: 0;
-  }
-
-  .configuration-bundles .bundle-preview pre {
-    background-color: #cfcfcf;
-  }
-
-  .configuration-bundles .bundle-preview dd {
-    margin-bottom: 10px;
-  }
-
-  .bundle-preview ul,
-  .bundle-preview ol {
-    margin: 0 0 10px 25px;
-  }
-
-  .bundle-preview ul {
-    list-style-type: circle;
-  }
-
-  .build-content-pack button.select-all {
-    margin-top: 7px;
-    padding: 0;
-  }
-
-  #react-configuration-bundles {
-    font-size: 14px;
-    font-weight: normal;
-    line-height: 20px;
-    margin-top: 15px;
-  }
-
   .form-inline label {
     margin-right: 10px;
   }
@@ -1011,40 +806,6 @@ const GlobalThemeStyles = createGlobalStyle`
     margin-left: 20px;
   }
 
-  .sources-title {
-    height: 22px;
-    line-height: 22px;
-    vertical-align: top;
-  }
-
-  .sources-filtering {
-    margin-top: 10px;
-  }
-
-  .sources-filtering .control-group {
-    margin-bottom: 0;
-  }
-
-  #dc-sources-pie-chart svg {
-    margin-top: 20px;
-  }
-
-  #dc-sources-pie-chart g.pie-slice.highlighted {
-    fill-opacity: 0.8;
-  }
-
-  .form-horizontal .control-group .controls .checkbox-control:first-child {
-    padding-top: 5px;
-  }
-
-  .form-horizontal .control-group .controls .checkbox-control label.checkbox {
-    display: inline-block;
-  }
-
-  .form-horizontal .control-group .controls .checkbox-control span.help-inline {
-    vertical-align: top;
-  }
-
   form.extractor-form .control-group label {
     display: inline-block;
   }
@@ -1062,14 +823,6 @@ const GlobalThemeStyles = createGlobalStyle`
     width: 110px;
   }
 
-  #grok-pattern-list th.name {
-    min-width: 200px;
-  }
-
-  #grok-pattern-list td {
-    word-break: break-all;
-  }
-
   .btn-text {
     font-family: 'Open Sans', sans-serif;
     font-size: 12px;
@@ -1079,48 +832,6 @@ const GlobalThemeStyles = createGlobalStyle`
 
   .message-loader-form input {
     margin-right: 5px;
-  }
-
-  ul.streams {
-    padding: 0;
-    margin: 0;
-  }
-
-  ul.streams li.stream {
-    display: block;
-    padding: 15px 0;
-  }
-
-  ul.streams li.stream:not(:last-child) {
-    border-bottom: 1px solid #6dcff6;
-  }
-
-  ul.streams li.stream .stream-data {
-    margin-top: 8px;
-  }
-
-  ul.streams li.stream .stream-data .stream-actions {
-    position: relative;
-    float: right;
-    right: 0;
-    bottom: 20px;
-  }
-
-  ul.streams li.stream .stream-data .stream-actions form.action-form {
-    display: inline-block;
-  }
-
-  ul.streams li.stream .stream-data .stream-actions .btn-delete {
-    margin-left: 15px;
-    margin-right: 15px;
-  }
-
-  ul.streams li.stream .stream-data .stream-actions .btn-delete.last {
-    margin-right: 0;
-  }
-
-  ul.streams li.stream .stream-description {
-    margin-bottom: 3px;
   }
 
   ul.entity-list {
@@ -1220,11 +931,6 @@ const GlobalThemeStyles = createGlobalStyle`
     padding: 0;
   }
 
-  .indexer-failures-body select.dynatable-per-page-select {
-    position: relative;
-    top: 0;
-  }
-
   table.indexer-failures {
     margin-top: 10px;
   }
@@ -1243,11 +949,6 @@ const GlobalThemeStyles = createGlobalStyle`
     margin-bottom: 0;
   }
 
-  .graylog-input {
-    margin-top: 15px;
-    border-bottom: 1px;
-  }
-
   .graylog-input-metrics {
     margin-top: 5px;
   }
@@ -1255,30 +956,6 @@ const GlobalThemeStyles = createGlobalStyle`
   .react-input-metrics {
     margin-top: 5px;
     font-size: 13px;
-  }
-
-  .alert-type-form label.radio-inline {
-    margin-right: 0;
-    vertical-align: baseline;
-  }
-
-  .alert-type-form .radio-inline input[type=radio] {
-    position: relative;
-    margin-left: -20px;
-    margin-right: 5px;
-  }
-
-  .alert-type-form div.well {
-    margin-bottom: 0;
-  }
-
-  .alert-type-form .threshold-type {
-    margin: 0 5px;
-    vertical-align: baseline;
-  }
-
-  .form-inline .alert-type-form .form-control {
-    vertical-align: baseline;
   }
 
   .filter .form-inline .form-group {
@@ -1317,21 +994,6 @@ const GlobalThemeStyles = createGlobalStyle`
 
   h2.extractor-title {
     margin-bottom: 2px;
-  }
-
-  p.failure-exception {
-    margin-top: 5px;
-    margin-bottom: 10px;
-    color: #aaa;
-  }
-
-  i.error-icon {
-    position: relative;
-    top: -3px;
-  }
-
-  .stream-description .fa-cube {
-    margin-right: 5px;
   }
 
   .stream-loader {
@@ -1397,23 +1059,12 @@ const GlobalThemeStyles = createGlobalStyle`
     content: "×";
   }
 
-  .field-analyzer {
-    margin-left: 0 !important;
-    margin-top: 10px !important;
-  }
-
   .save-button-margin {
     margin-right: 5px;
   }
 
   .form-control.message-id-input {
     width: 300px;
-  }
-
-  .dropdown-header {
-    text-transform: uppercase;
-    padding: 0 15px !important;
-    font-weight: bold;
   }
 `;
 
