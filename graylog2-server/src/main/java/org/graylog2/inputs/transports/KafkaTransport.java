@@ -59,7 +59,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Named;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -187,7 +186,9 @@ public class KafkaTransport extends ThrottleableTransport {
         final Properties props = new Properties();
 
         props.put("group.id", configuration.getString(CK_GROUP_ID, DEFAULT_GROUP_ID));
-        props.put("client.id", "gl2-" + nodeId + "-" + input.getId());
+        props.put("client.id", "gl2-" + nodeId + "-" + input.getId(
+
+        ));
 
         props.put("fetch.min.bytes", String.valueOf(configuration.getInt(CK_FETCH_MIN_BYTES)));
         props.put("fetch.wait.max.ms", String.valueOf(configuration.getInt(CK_FETCH_WAIT_MAX)));
