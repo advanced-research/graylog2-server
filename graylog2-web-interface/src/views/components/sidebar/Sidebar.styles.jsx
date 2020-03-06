@@ -1,12 +1,13 @@
 // @flow strict
-import styled, { type StyledComponent } from 'styled-components';
+import styled, { css, type StyledComponent } from 'styled-components';
+import { util, type ThemeInterface } from 'theme';
 import { Title as NavItemTitle } from './NavItem.styles';
 
-export const Container: StyledComponent<{ open: boolean }, {}, HTMLDivElement> = styled.div`
+export const Container: StyledComponent<{ open: boolean }, ThemeInterface, HTMLDivElement> = styled.div(({ theme }) => css`
   grid-area: sidebar;
   z-index: 3;
-  background: #393939;
-  color: #9e9e9e;
+  background: ${theme.color.gray[10]};
+  color: ${util.contrastingColor(theme.color.gray[10], 'AA')};
   height: calc(100vh - 50px);
   padding-top: 20px;
   position: sticky;
@@ -14,7 +15,7 @@ export const Container: StyledComponent<{ open: boolean }, {}, HTMLDivElement> =
   grid-column-start: 1;
   grid-column-end: ${props => (props.open ? 3 : 2)};
   box-shadow: 3px 0 3px rgba(0, 0, 0, 0.25);
-`;
+`);
 
 export const ContentOverlay: StyledComponent<{}, {}, HTMLDivElement> = styled.div`
   position: fixed;
